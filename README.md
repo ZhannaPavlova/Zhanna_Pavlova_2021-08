@@ -60,7 +60,7 @@ FROM cte_transactions
  ---ТОР 3 самых дорогих товара
 
  WITH Items as
- (select TOP 3 MAX(nm.[UnitPrice]) as price
+ (select TOP 3 nm.[UnitPrice] as price
 			,[OrderID]
 			,sord.[StockItemID] as ItemID
 			,nm.[StockItemName] as ItemName
@@ -68,7 +68,8 @@ FROM cte_transactions
 	  join [Warehouse].[StockItems] nm On nm.StockItemID =sord.StockItemID
 	 	GROUP BY 	[OrderID]
 					,sord.[StockItemID]
-					,nm.[StockItemName])
+					,nm.[StockItemName]
+Order by nm.[UnitPrice] desc )
 
 ,PackedbyPerson as
 (select [OrderID]
